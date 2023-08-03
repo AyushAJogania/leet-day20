@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <climits>
+
+class Solution {
+public:
+    int threeSumClosest(std::vector<int>& nums, int target) {
+        int n = nums.size();
+        int closestSum = 0;
+        int minDiff = INT_MAX;
+        
+        // Sort the input array
+        std::sort(nums.begin(), nums.end());
+        
+        // Iterate through the array
+        for (int i = 0; i < n - 2; i++) {
+            int left = i + 1;
+            int right = n - 1;
+            
+            while (left < right) {
+                int currentSum = nums[i] + nums[left] + nums[right];
+                int currentDiff = abs(currentSum - target);
+                
+                if (currentDiff == 0) {
+                    // If the sum is equal to target, return the sum
+                    return currentSum;
+                } else if (currentDiff < minDiff) {
+                    // Update the closest sum and minimum difference
+                    closestSum = currentSum;
+                    minDiff = currentDiff;
+                }
+                
+                if (currentSum < target) {
+                    // Move left pointer to increase the sum
+                    left++;
+                } else {
+                    // Move right pointer to decrease the sum
+                    right--;
+                }
+            }
+        }
+        
+        return closestSum;
+    }
+};
+
